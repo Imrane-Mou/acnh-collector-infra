@@ -1,0 +1,33 @@
+# OpenTofu / Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+mysql.sh
+mysql-*.sh
+
+# SSH keys
+*.pem
+id_rsa
+id_ed25519
+tp_vm_key
+tp_vm_key.pub
+
+# Secrets
+.env
+.env.*
+*.vault_pass.txt
+secrets.yml
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+# Local secrets loader
+load-secrets.ps1
+
+# Ansible vault password file
+.vault_pass.txt
