@@ -1,7 +1,6 @@
 # ─────────────────────────────────────────────
 # Auto-generate the Ansible inventory after VM creation.
-# We use the DNS name (not IP) so the CI pipeline targets a stable name
-# even when the VM gets recreated with a new IP.
+# Use the DNS name so CI has a stable target (IP changes every apply).
 # ─────────────────────────────────────────────
 resource "local_file" "ansible_inventory" {
   filename = "${path.module}/../ansible/inventories/prod/inventory"
