@@ -1,0 +1,29 @@
+---
+# ─────────────────────────────────────────────
+# App image references (in the teacher's registry)
+# ─────────────────────────────────────────────
+app_registry: "registry.edu.forestier.re"
+app_backend_image: "registry.edu.forestier.re/imrane.moumad/backend:latest"
+app_frontend_image: "registry.edu.forestier.re/imrane.moumad/frontend:latest"
+
+# ─────────────────────────────────────────────
+# Container port mapping (port INSIDE the container)
+# ─────────────────────────────────────────────
+app_backend_port: 8080
+app_frontend_port: 80
+
+# ─────────────────────────────────────────────
+# Domains (must match what we set in OpenTofu / OVH)
+# ─────────────────────────────────────────────
+app_domain_frontend: "imrane.moumad.uca-devops.ovh"
+app_domain_api: "api.imrane.moumad.uca-devops.ovh"
+
+# ─────────────────────────────────────────────
+# Docker network — backend, frontend, traefik all join this
+# ─────────────────────────────────────────────
+app_docker_network: "app-net"
+
+# ─────────────────────────────────────────────
+# Traefik
+# ─────────────────────────────────────────────
+app_traefik_image: "traefik:v3.6"

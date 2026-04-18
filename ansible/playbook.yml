@@ -1,0 +1,31 @@
+---
+- name: Deploy ACNH Collector application
+  hosts: servers
+  become: false
+  any_errors_fatal: true
+  gather_facts: true   # we need facts for OS detection (Ubuntu vs Debian)
+
+  vars_files:
+    - vars/vars_app.yml
+
+  tasks:
+    - name: "Load secrets from OpenBAO"
+      ansible.builtin.include_tasks: tasks/load_secrets.yml
+
+    - name: "Install Docker on the VM"
+      ansible.builtin.include_tasks: tasks/install_docker.yml
+
+    - name: "Login to the GitLab Docker registry"
+      ansible.builtin.include_tasks: tasks/registry_login.yml
+
+    - name: "Create the shared Docker network"
+      ansible.builtin.include_tasks: tasks/network.yml
+
+    - name: "Deploy Traefik (reverse proxy)"
+      ansible.builtin.include_tasks: tasks/deploy_traefik.yml
+
+    - name: "Deploy the backend container"
+      ansible.builtin.include_tasks: tasks/deploy_backend.yml
+
+    - name: "Deploy the frontend container"
+      ansible.builtin.include_tasks: tasks/deploy_frontend.yml
