@@ -1,0 +1,30 @@
+---
+# ─────────────────────────────────────────────
+# Run Traefik as the reverse proxy.
+# Listens on 80/443 and routes traffic to backend/frontend
+# based on hostname rules defined via container labels.
+# ─────────────────────────────────────────────
+
+- name: "Deploy Traefik container"
+  community.docker.docker_container:
+    name: traefik
+    image: "{{ app_traefik_image }}"
+    restart_policy: unless-stopped
+    state: started
+    networks:
+      - name: "{{ app_docker_network }}"
+    published_ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    command:
+      # Providers
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # Log level (optional — change to DEBUG to troubleshoot)
+      - "--log.level=INFO"
+  become: true

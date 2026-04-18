@@ -1,0 +1,29 @@
+---
+# ─────────────────────────────────────────────
+# Deploy the Vue/Nginx frontend container.
+# Traefik routes `<user>.uca-devops.ovh` traffic to it.
+# ─────────────────────────────────────────────
+
+- name: "Pull the latest frontend image"
+  community.docker.docker_image:
+    name: "{{ app_frontend_image }}"
+    source: pull
+    force_source: true
+  become: true
+
+- name: "Deploy frontend container"
+  community.docker.docker_container:
+    name: frontend
+    image: "{{ app_frontend_image }}"
+    restart_policy: unless-stopped
+    state: started
+    recreate: true
+    networks:
+      - name: "{{ app_docker_network }}"
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "{{ app_docker_network }}"
+      traefik.http.routers.frontend.rule: "Host(`{{ app_domain_frontend }}`)"
+      traefik.http.routers.frontend.entrypoints: "web"
+      traefik.http.services.frontend.loadbalancer.server.port: "{{ app_frontend_port | string }}"
+  become: true

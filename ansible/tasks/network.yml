@@ -1,0 +1,12 @@
+---
+# ─────────────────────────────────────────────
+# Create a user-defined bridge network so all 3 containers
+# (traefik, backend, frontend) can talk to each other by name.
+# ─────────────────────────────────────────────
+
+- name: "Create Docker network '{{ app_docker_network }}'"
+  community.docker.docker_network:
+    name: "{{ app_docker_network }}"
+    driver: bridge
+    state: present
+  become: true

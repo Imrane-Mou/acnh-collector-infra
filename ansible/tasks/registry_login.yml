@@ -1,0 +1,14 @@
+---
+# ─────────────────────────────────────────────
+# Authenticate the VM's Docker daemon against the private registry
+# so it can pull private images (backend + frontend).
+# ─────────────────────────────────────────────
+
+- name: "Log in to {{ app_registry }}"
+  community.docker.docker_login:
+    registry_url: "{{ app_registry }}"
+    username: "{{ registry_user }}"
+    password: "{{ registry_password }}"
+    reauthorize: true
+  become: true
+  no_log: true
