@@ -16,6 +16,10 @@ terraform {
       source  = "hashicorp/local"
       version = "~> 2.4"
     }
+    vault = {
+      source  = "hashicorp/vault"
+      version = "~> 4.4"
+    }
   }
 }
 
@@ -37,3 +41,7 @@ provider "ovh" {
   consumer_key       = var.ovh_consumer_key
 }
 
+provider "vault" {
+  address          = "https://openbao.edu.forestier.re"
+  skip_child_token = true
+}

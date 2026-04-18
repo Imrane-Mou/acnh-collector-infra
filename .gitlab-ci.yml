@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────
+# GitLab CI — infra
+# Runs Ansible against the existing VM to redeploy the apps.
+# Does NOT run OpenTofu (teacher rule).
+# ─────────────────────────────────────────────
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  image: alpine:3.19
+  before_script:
+    # Install Ansible + deps on this Alpine runner
+    - apk add --no-cache python3 py3-pip openssh-client bash
+    - pip install --break-system-packages ansible docker requests
+    - ansible-galaxy collection install community.docker
+
+    # Set up SSH key (comes in as a temp file thanks to File-type variable)
+    - mkdir -p ~/.ssh
+    - cp "$SSH_PRIVATE_KEY" ~/.ssh/tp_vm_key
+    - chmod 600 ~/.ssh/tp_vm_key
+
+    # Trust the VM's host key automatically
+    - printf "Host *\n  StrictHostKeyChecking no\n  UserKnownHostsFile=/dev/null\n" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+
+  script:
+    - cd ansible
+    - ansible-playbook playbook.yml
+
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
