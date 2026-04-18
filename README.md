@@ -145,15 +145,8 @@ OpenTofu creates the VM, DB, DNS records, writes MySQL credentials to OpenBAO, a
 
 ### Deploy the application
 
-**Windows (PowerShell):**
+Ansible runs on Linux only. Windows users should use WSL.
 
-```powershell
-. .\load-secrets.ps1
-cd ansible
-ansible-playbook playbook.yml
-```
-
-**Linux / WSL (bash):**
 
 ```bash
 source ./load-secrets.sh
