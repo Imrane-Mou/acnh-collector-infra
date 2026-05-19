@@ -176,10 +176,6 @@ tofu destroy
 | Database Provider | Clever Cloud (MySQL free tier) |
 | DNS Provider | OVH |
 
-## 🌐 Live URLs
-
-- Frontend: http://imrane.moumad.uca-devops.ovh
-- API: http://api.imrane.moumad.uca-devops.ovh
 
 ## 📌 Design notes
 
