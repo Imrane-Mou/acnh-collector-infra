@@ -1,6 +1,5 @@
-# TP DevOps — Infrastructure & Deployment
+# Infrastructure & Deployment
 
-> DevOps TP — UCA ISIMA — Imrane Moumad
 
 This repository automates the infrastructure provisioning and application deployment for the **ACNHCollector** project (a Vue.js frontend + Spring Boot backend).
 
